@@ -11,14 +11,14 @@ import com.example.rathana.roompersistence.data.BookDatabase;
 import com.example.rathana.roompersistence.data.dao.UserDao;
 import com.example.rathana.roompersistence.data.entity.User;
 
-public class MainActivity extends AppCompatActivity {
+public class AddNewAuthorActivity extends AppCompatActivity {
 
     EditText name,pass, email;
     UserDao dao;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_add_new_author);
 
         name=findViewById(R.id.name);
         pass=findViewById(R.id.password);
