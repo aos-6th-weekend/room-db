@@ -32,4 +32,5 @@ public interface UserDao {
 
     @Query("select * from users")
     List<User> getUsers();
+
 }

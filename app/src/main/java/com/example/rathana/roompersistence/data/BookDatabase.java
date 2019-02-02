@@ -15,7 +15,7 @@ import com.example.rathana.roompersistence.data.entity.User;
 @Database(version = 2,entities = {User.class,Book.class})
 public abstract class BookDatabase extends RoomDatabase {
 
-    public  abstract UserDao userDao();
+    public abstract UserDao userDao();
     public abstract BookDao bookDao();
 
     public  static BookDatabase getInstance(Context context){

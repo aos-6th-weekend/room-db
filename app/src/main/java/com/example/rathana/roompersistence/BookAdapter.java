@@ -11,18 +11,18 @@ import android.widget.TextView;
 
 import com.example.rathana.roompersistence.data.entity.Book;
 import com.example.rathana.roompersistence.data.entity.BookUser;
-import com.example.rathana.roompersistence.data.entity.User;
-import com.example.rathana.roompersistence.data.entity.UserBooks;
 
 import java.util.List;
 
-import javax.security.auth.login.LoginException;
-
 public class BookAdapter extends RecyclerView.Adapter<BookAdapter.ViewHolder> {
 
+    OnBookListener listener;
     List<BookUser> bookUsers;
-    public BookAdapter(List<BookUser> bookUsers) {
+
+
+    public BookAdapter(List<BookUser> bookUsers , OnBookListener listener) {
         this.bookUsers=bookUsers;
+        this.listener=listener;
 
     }
 
@@ -35,12 +35,12 @@ public class BookAdapter extends RecyclerView.Adapter<BookAdapter.ViewHolder> {
     }
 
     @Override
-    public void onBindViewHolder(@NonNull ViewHolder viewHolder, int i) {
-        BookUser bookUser=bookUsers.get(i);
+    public void onBindViewHolder(@NonNull final ViewHolder viewHolder, int i) {
+        final BookUser bookUser=bookUsers.get(i);
 
         viewHolder.authorName.setText(bookUser.userName);
-        viewHolder.title.setText(bookUser.book.title);
-        viewHolder.publishDate.setText(bookUser.book.publishDate);
+        viewHolder.title.setText(bookUser.title);
+        viewHolder.publishDate.setText(bookUser.publishDate);
         viewHolder.thumb.setImageResource(R.drawable.panda);
 
         /*for(User u : users){
@@ -52,6 +52,12 @@ public class BookAdapter extends RecyclerView.Adapter<BookAdapter.ViewHolder> {
             }
 
         }*/
+        viewHolder.btnDel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                listener.onDelete(bookUser,viewHolder.getAdapterPosition());
+            }
+        });
 
     }
 
@@ -60,14 +66,29 @@ public class BookAdapter extends RecyclerView.Adapter<BookAdapter.ViewHolder> {
         return bookUsers.size();
     }
 
-    public void setBookUser(List<BookUser> bookUsers) {
+    public void setBookUsers(List<BookUser> bookUsers) {
         this.bookUsers.addAll(bookUsers);
         notifyDataSetChanged();
     }
 
+    public void setBookUser(BookUser bookUser) {
+        this.bookUsers.add(0,bookUser);
+        notifyItemInserted(0);
+    }
+    public void setBook(Book book) {
+
+    }
+
+    public void onDelete(BookUser bookUser,int pos) {
+
+        this.bookUsers.remove(bookUser);
+        notifyItemRemoved(pos);
+
+    }
+
     class ViewHolder extends RecyclerView.ViewHolder{
 
-        ImageView thumb;
+        ImageView thumb,btnDel;
         TextView title,authorName,publishDate;
 
         public ViewHolder(@NonNull View itemView) {
@@ -76,7 +97,11 @@ public class BookAdapter extends RecyclerView.Adapter<BookAdapter.ViewHolder> {
             title=itemView.findViewById(R.id.title);
             authorName=itemView.findViewById(R.id.authorName);
             publishDate=itemView.findViewById(R.id.publishDate);
+            btnDel=itemView.findViewById(R.id.btnDel);
         }
     }
 
+    public interface  OnBookListener{
+        void onDelete(BookUser bookUser, int pos);
+    }
 }

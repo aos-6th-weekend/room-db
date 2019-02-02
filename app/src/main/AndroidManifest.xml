@@ -9,11 +9,12 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".AddNewAuthorActivity"></activity>
-        <activity android:name=".AddNewBookActivity">
+        <activity android:name=".AddNewAuthorActivity" />
+        <activity android:name=".AddNewBookActivity"></activity>
+        <activity android:name=".HomeActivity">
 
         </activity>
-        <activity android:name=".HomeActivity">
+        <activity android:name=".AskSycnTaskActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
